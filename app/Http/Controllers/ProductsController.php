@@ -277,7 +277,9 @@ class ProductsController extends Controller
     public function cart(Request $request){
         if(Auth::check()){
             $user_email = Auth::user()->email;
-            $userCart = DB::table('carts')->where(['user_email'=>$user_email])->get();
+            $session_id = Session::get('session_id');
+            $userCart = DB::table('carts')->where(['user_email'=>$user_email])
+                                          ->orWhere(['session_id'=>$session_id])->get();
         }else{
             $session_id = Session::get('session_id');
             $userCart = DB::table('carts')->where(['session_id'=>$session_id])->get();
@@ -403,9 +405,11 @@ class ProductsController extends Controller
     public function orderReview(){
         $user_id = Auth::user()->id;
         $user_email = Auth::user()->email;
+        $session_id = Session::get('session_id');
         $shippingDetails = DeliveryAdress::where('user_id',$user_id)->first();
         $userDetails = User::find($user_id);
-        $userCart = DB::table('carts')->where(['user_email'=>$user_email])->get();
+        $userCart = DB::table('carts')->where(['user_email'=>$user_email])
+                                      ->orWhere(['session_id'=>$session_id])->get();
         foreach($userCart as $key=>$product){
             $productDetails = Products::where('id',$product->product_id)->first();
             $userCart[$key]->image = $productDetails->image;
@@ -417,6 +421,7 @@ class ProductsController extends Controller
         if($request->isMethod('post')){
             $user_id = Auth::user()->id;
             $user_email = Auth::user()->email;
+            $session_id = Session::get('session_id');
             $data = $request->all();
 
             //Get Shipping Details of Users
@@ -452,7 +457,8 @@ class ProductsController extends Controller
 
             $order_id = DB::getPdo()->lastinsertID();
 
-            $cartProducts = DB::table('carts')->where(['user_email'=>$user_email])->get();
+            $cartProducts = DB::table('carts')->where(['user_email'=>$user_email])
+                                              ->orWhere(['session_id'=>$session_id])->get();
 
             foreach($cartProducts as $pro){
                 $cartPro = new OrdersProduct;
@@ -480,13 +486,17 @@ class ProductsController extends Controller
 
     public function thanks(){
         $user_email = Auth::user()->email;
-        DB::table('carts')->where('user_email',$user_email)->delete();
+        $session_id = Session::get('session_id');
+        DB::table('carts')->where('user_email',$user_email)
+                          ->orWhere(['session_id'=>$session_id]) ->delete();
         return view('wayshop.orders.thanks');
     }
 
     public function stripe(Request $request){
         $user_email = Auth::user()->email;
-        DB::table('carts')->where('user_email',$user_email)->delete();
+        $session_id = Session::get('session_id');
+        DB::table('carts')->where('user_email',$user_email)
+                         ->orWhere(['session_id'=>$session_id])->delete();
         if($request->isMethod('post')){
             $data = $request->all();
             // echo "<pre>";print_r($data);die;

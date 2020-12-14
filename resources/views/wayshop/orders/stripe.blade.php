@@ -20,7 +20,7 @@
                         <b>Total Amount</b>
                         <input type="text" name="total_amount" value="{{Session::get('grand_total')}}" placeholder="Enter Total Amount" class="form-control">
                         <b>Your Name</b>
-                        <input type="text" name="name" value="{{Session::get('name')}}" placeholder="Enter Your Name" class="form-control">
+                        <input type="text" name="name"  placeholder="Enter Your Name" class="form-control">
                         <b>Card Number</b>
                         <div id="card-element" class="form-control">
 

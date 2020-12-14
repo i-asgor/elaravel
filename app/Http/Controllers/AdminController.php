@@ -7,6 +7,7 @@ use Session;
 use Auth;
 use App\User;
 use App\Admin;
+use App\Orders;
 
 class AdminController extends Controller
 {
@@ -28,7 +29,8 @@ class AdminController extends Controller
     public function dashboard(){
         $userCount = User::count();
         $adminCount = Admin::count();
-        return view('admin.dashboard')->with(compact('userCount','adminCount'));
+        $orderTotal = Orders::get();
+        return view('admin.dashboard')->with(compact('userCount','adminCount','orderTotal'));
     }
     public function logout(){
         Session::flush();

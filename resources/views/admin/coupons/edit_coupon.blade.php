@@ -74,7 +74,7 @@
                                 <div class="reset-button">
                                     {{-- <a href="#" class="btn btn-warning">Reset</a>
                                     --}}
-                                    <input type="submit" class="btn btn-success" value="Edit Coupon">
+                                    <input type="submit" class="btn btn-success" value="Update Coupon">
                                 </div>
                             </form>
                         </div>
