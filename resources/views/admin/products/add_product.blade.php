@@ -71,6 +71,7 @@
                                     <input type="text" class="form-control" placeholder="Enter Product Color"
                                         name="product_color" id="product_color" required>
                                 </div>
+
                                 <div class="form-group">
                                     <label>Product Description</label>
                                     <textarea name="product_description" id="product_description" class="form-control"

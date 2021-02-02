@@ -52,6 +52,7 @@ Route::group(['middleware' => ['frontlogin']],function(){
 // Route for add to cart
 Route::match(['get','post'],'/add-cart','ProductsController@addtoCart');
 // Route for cart
+// Route::match(['get','post'],'/cart','ProductsController@cart');
 Route::match(['get','post'],'/cart','ProductsController@cart')->middleware('verified');
 // Route for Delete Cart Product
 Route::get('/cart/delete-product/{id}','ProductsController@deleteCartProduct');
